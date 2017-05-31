@@ -11,6 +11,7 @@ from CMSExperiment import CMSExperiment
 from OtherExperiment import OtherExperiment
 from AMSTaiwanExperiment import AMSTaiwanExperiment
 from NordugridATLASExperiment import NordugridATLASExperiment
+from LSSTExperiment import LSSTExperiment
 
 class ExperimentFactory(object):
 
@@ -68,6 +69,16 @@ if __name__ == "__main__":
     print "\nAttempting to get AMSTaiwan"
     try:
         experimentClass = factory.newExperiment('AMSTaiwan')
+    except Exception, e:
+        print e
+    else:
+        si = experimentClass()
+        print 'got experiment:',si.getExperiment()
+        del experimentClass
+
+    print "\nAttempting to get LSST"
+    try:
+        experimentClass = factory.newExperiment('LSST')
     except Exception, e:
         print e
     else:

@@ -10,6 +10,7 @@ from ATLASSiteInformation import ATLASSiteInformation
 from AMSTaiwanSiteInformation import AMSTaiwanSiteInformation
 from CMSSiteInformation import CMSSiteInformation
 from NordugridATLASSiteInformation import NordugridATLASSiteInformation
+from LSSTSiteInformation import LSSTSiteInformation
 from OtherSiteInformation import OtherSiteInformation
 
 class SiteInformationFactory(object):
@@ -79,6 +80,16 @@ if __name__ == "__main__":
     print "\nAttempting to get AMSTaiwan"
     try:
         siteInformationClass = factory.newSiteInformation('AMSTaiwan')
+    except Exception, e:
+        print e
+    else:
+        si = siteInformationClass()
+        print 'got experiment:',si.getExperiment()
+        del siteInformationClass
+
+    print "\nAttempting to get LSST"
+    try:
+        siteInformationClass = factory.newSiteInformation('LSST')
     except Exception, e:
         print e
     else:
