@@ -11,6 +11,7 @@ from CMSExperiment import CMSExperiment
 from OtherExperiment import OtherExperiment
 from AMSTaiwanExperiment import AMSTaiwanExperiment
 from NordugridATLASExperiment import NordugridATLASExperiment
+from LSSTExperiment import LSSTExperiment
 
 class ExperimentFactory(object):
 
