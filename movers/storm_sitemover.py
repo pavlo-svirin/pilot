@@ -38,7 +38,7 @@ class stormSiteMover(BaseSiteMover):
         """
         pass
 
-    def stageIn(self, source, destination, fspec):
+    def stageIn(self, source, destination, fspec, **kwargs):
         """
         Query HTTP for etag, then symlink to the pilot working directory.
 

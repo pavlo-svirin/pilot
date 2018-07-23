@@ -208,7 +208,7 @@ class pandaproxySiteMover(BaseSiteMover):
         self.log("pandaProxySitemover stageInFile parameters: src=%s, dst=%s fspec=%s" % (source, destination, fspec) )
         raise Exception('NOT IMPLEMENTED')
 
-    def stageIn(self, source, destination, fspec):
+    def stageIn(self, source, destination, fspec, **kwargs):
         """
         :param source:      original (remote) file location - not used
         :param destination: where to create the link

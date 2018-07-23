@@ -290,7 +290,7 @@ class BaseSiteMover(object):
 
         return True
 
-    def get_data(self, fspec):
+    def get_data(self, fspec, **kwargs):
         """
             fspec is FileSpec object
             :return: file details: {'checksum': '', 'checksum_type':'', 'filesize':''}
@@ -300,10 +300,10 @@ class BaseSiteMover(object):
         # resolve proper surl and find related replica
 
         dst = os.path.join(self.workDir, fspec.lfn)
-        return self.stageIn(fspec.turl, dst, fspec)
+        return self.stageIn(fspec.turl, dst, fspec, **kwargs)
 
 
-    def stageIn(self, source, destination, fspec):
+    def stageIn(self, source, destination, fspec, **kwargs):
         """
             Stage in the source file: do stagein file + verify local file
             :return: file details: {'checksum': '', 'checksum_type':'', 'filesize':''}

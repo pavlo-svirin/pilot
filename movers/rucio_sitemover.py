@@ -2,6 +2,7 @@
   Rucio SiteMover
 
   :author: Mario Lassnig <mario.lassnig@cern.ch>, 2015-2018
+  :author: Pavlo Svirin <pavlo.svirin@cern.ch>, 2018
 """
 
 from .base import BaseSiteMover
@@ -46,7 +47,7 @@ class rucioSiteMover(BaseSiteMover):
         tolog('which gfal2: %s' % o)
         tolog('which gfal-copy: %s' % self.__which('gfal-copy'))
 
-    def stageIn(self, turl, dst, fspec):
+    def stageIn(self, turl, dst, fspec, **kwargs):
         """
         Use the rucio download command to stage in the file.
 
@@ -56,24 +57,43 @@ class rucioSiteMover(BaseSiteMover):
         :return:      destination file details (ddmendpoint, surl, pfn)
         """
 
+        trace_str_pattern = "%s%s%s%s%s%s%s"
+        trace_str = ''
+        job = kwargs.get('job', None)  
+        site_name = os.environ['SITE_NAME']
+        analyjob = kwargs.get('analyjob', False)
+        if job is not None:
+            trace_str = trace_str_pattern % (" --trace_appid %s" % job.jobId if job.jobId is not None else '',
+                                            " --trace_dataset <dataset name>" else '',
+                                            " --trace_datasetscope %s" % job.scopeIn if job.scopeIn is not None else '',
+                                            " --trace_eventtype get_sm%s" % "_a" if analyjob else '',
+                                            " --trace_pq %s" % site_name if site_name is not None else '',
+                                            " --trace_taskid %s" if job.taskID is not None else '',
+                                            " --trace_usrdn %s" % job.prodUserID if job.prodUserID is not None else '' )
+
+
         if fspec.replicas:
             if not fspec.allowAllInputRSEs:
-                cmd = 'rucio -v download --dir %s --rse %s %s:%s' % (dirname(dst),
+                cmd = 'rucio -v download %s --dir %s --rse %s %s:%s' % (trace_str,
+                                                                     dirname(dst),
                                                                      fspec.replicas[0][0],
                                                                      fspec.scope,
                                                                      fspec.lfn)
             else:
-                cmd = 'rucio -v download --dir %s %s:%s' % (dirname(dst),
+                cmd = 'rucio -v download %s --dir %s %s:%s' % (trace_str, 
+                                                            dirname(dst),
                                                             fspec.scope,
                                                             fspec.lfn)
         else:
             if self.isDeterministic(fspec.ddmendpoint):
-                cmd = 'rucio -v download --dir %s --rse %s %s:%s' % (dirname(dst),
+                cmd = 'rucio -v download %s --dir %s --rse %s %s:%s' % (trace_str,
+                                                                     dirname(dst),
                                                                      fspec.ddmendpoint,
                                                                      fspec.scope,
                                                                      fspec.lfn)
             else:
-                cmd = 'rucio -v download --dir %s --rse %s --pfn %s %s:%s' % (dirname(dst),
+                cmd = 'rucio -v download %s --dir %s --rse %s --pfn %s %s:%s' % (trace_str,
+                                                                              dirname(dst),
                                                                               fspec.ddmendpoint,
                                                                               fspec.turl,
                                                                               fspec.scope,

@@ -775,7 +775,7 @@ class JobMover(object):
                     self.log("Get attempt %s/%s for file (%s/%s) with lfn=%s .. sitemover=%s" % (_attempt, self.stageinretry, fnum, nfiles, fdata.lfn, sitemover))
 
                     try:
-                        result = sitemover.get_data(fdata)
+                        result = sitemover.get_data(fdata, job=self.job, analyjob=analyjob)
                         fdata.status = 'transferred' # mark as successful
                         fdata.status_code = 0
                         if result.get('ddmendpoint'):
