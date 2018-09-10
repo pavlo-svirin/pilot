@@ -63,13 +63,14 @@ class rucioSiteMover(BaseSiteMover):
         site_name = os.environ['SITE_NAME']
         analyjob = kwargs.get('analyjob', False)
         if job is not None:
-            trace_str = trace_str_pattern % (" --trace_appid %s" % job.jobId if job.jobId is not None else '',
-                                            " --trace_dataset <dataset name>" else '',
-                                            " --trace_datasetscope %s" % job.scopeIn if job.scopeIn is not None else '',
-                                            " --trace_eventtype get_sm%s" % "_a" if analyjob else '',
-                                            " --trace_pq %s" % site_name if site_name is not None else '',
-                                            " --trace_taskid %s" if job.taskID is not None else '',
-                                            " --trace_usrdn %s" % job.prodUserID if job.prodUserID is not None else '' )
+            trace_str = trace_str_pattern % (" --trace_appid %s" %  self.trace_report['appid'] if self.trace_report['appid'] is not None else '',
+                                            " --trace_dataset %s" % self.trace_report['dataset'] if self.trace_report['dataset'] is not None else '',
+                                            " --trace_datasetscope %s" % self.trace_report['scope'] if self.trace_report['scope'] is not None else '',
+                                            #" --trace_eventtype get_sm%s" % "_a" if analyjob else '',
+                                            " --trace_eventtype get_sm%s" % self.trace_report['eventType'] if self.trace_report['eventType'] else '',
+                                            " --trace_pq %s" % self.trace_report['pq'] if self.trace_report['pq'] is not None else '',
+                                            " --trace_taskid %s" % self.trace_report['taskid'] if self.trace_report['taskid'] is not None else '',
+                                            " --trace_usrdn %s" % self.trace_report['usrdn'] if self.trace_report['usrdn'] is not None else '' )
 
 
         if fspec.replicas:
