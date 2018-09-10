@@ -47,7 +47,7 @@ class rucioSiteMover(BaseSiteMover):
         tolog('which gfal2: %s' % o)
         tolog('which gfal-copy: %s' % self.__which('gfal-copy'))
 
-    def stageIn(self, turl, dst, fspec, **kwargs):
+    def stageIn(self, turl, dst, fspec):
         """
         Use the rucio download command to stage in the file.
 
@@ -59,9 +59,9 @@ class rucioSiteMover(BaseSiteMover):
 
         trace_str_pattern = "%s%s%s%s%s%s%s"
         trace_str = ''
-        job = kwargs.get('job', None)  
+        #job = kwargs.get('job', None)  
         site_name = os.environ['SITE_NAME']
-        analyjob = kwargs.get('analyjob', False)
+        #analyjob = kwargs.get('analyjob', False)
         if job is not None:
             trace_str = trace_str_pattern % (" --trace_appid %s" %  self.trace_report['appid'] if self.trace_report['appid'] is not None else '',
                                             " --trace_dataset %s" % self.trace_report['dataset'] if self.trace_report['dataset'] is not None else '',

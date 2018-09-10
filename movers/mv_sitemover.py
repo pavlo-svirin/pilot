@@ -72,7 +72,7 @@ class mvSiteMover(BaseSiteMover):
         return surl
 
 
-    def stageIn(self, source, destination, fspec, **kwargs):
+    def stageIn(self, source, destination, fspec):
         """
         Override stageIn rather than stageInFile since most of stageIn is
         unnecessary.
