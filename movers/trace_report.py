@@ -28,6 +28,7 @@ class TraceReport(dict):
                 'transferStart': None,
                 'validateStart': None,
                 'timeEnd': None,
+                'scope': None,
                 'dataset': '',
                 'version': None,
                 'duid': None,
