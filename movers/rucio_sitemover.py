@@ -59,18 +59,13 @@ class rucioSiteMover(BaseSiteMover):
 
         trace_str_pattern = "%s%s%s%s%s%s%s"
         trace_str = ''
-        #job = kwargs.get('job', None)  
-        site_name = os.environ['SITE_NAME']
-        #analyjob = kwargs.get('analyjob', False)
-        if job is not None:
-            trace_str = trace_str_pattern % (" --trace_appid %s" %  self.trace_report['appid'] if self.trace_report['appid'] is not None else '',
-                                            " --trace_dataset %s" % self.trace_report['dataset'] if self.trace_report['dataset'] is not None else '',
-                                            " --trace_datasetscope %s" % self.trace_report['scope'] if self.trace_report['scope'] is not None else '',
-                                            #" --trace_eventtype get_sm%s" % "_a" if analyjob else '',
-                                            " --trace_eventtype get_sm%s" % self.trace_report['eventType'] if self.trace_report['eventType'] else '',
-                                            " --trace_pq %s" % self.trace_report['pq'] if self.trace_report['pq'] is not None else '',
-                                            " --trace_taskid %s" % self.trace_report['taskid'] if self.trace_report['taskid'] is not None else '',
-                                            " --trace_usrdn %s" % self.trace_report['usrdn'] if self.trace_report['usrdn'] is not None else '' )
+        trace_str = trace_str_pattern % (" --trace_appid \"%s\"" %  self.trace_report['appid'] if self.trace_report['appid'] is not None else '',
+                                         " --trace_dataset \"%s\"" % self.trace_report['dataset'] if self.trace_report['dataset'] is not None else '',
+                                         " --trace_datasetscope \"%s\"" % self.trace_report['scope'] if self.trace_report['scope'] is not None else '',
+                                         " --trace_eventtype \"get_sm%s\"" % self.trace_report['eventType'] if self.trace_report['eventType'] else '',
+                                         " --trace_pq \"%s\"" % self.trace_report['pq'] if self.trace_report['pq'] is not None else '',
+                                         " --trace_taskid \"%s\"" % self.trace_report['taskid'] if self.trace_report['taskid'] is not None else '',
+                                         " --trace_usrdn \"%s\"" % self.trace_report['usrdn'] if self.trace_report['usrdn'] is not None else '' )
 
 
         if fspec.replicas:
